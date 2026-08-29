@@ -15,117 +15,73 @@ local success, err = pcall(function()
         error("Could not find PlayerGui")
     end
     
-    -- Create ScreenGui
+    -- Create main ScreenGui
     local screenGui = Instance.new("ScreenGui")
     screenGui.Name = "CrewWarEssentialsGui"
     screenGui.ResetOnSpawn = false
     screenGui.IgnoreGuiInset = true
     screenGui.Parent = playerGui
     
-    -- Create fullscreen background
-    local backgroundFrame = Instance.new("Frame")
-    backgroundFrame.Name = "BackgroundFrame"
-    backgroundFrame.Size = UDim2.new(1, 0, 1, 0)
-    backgroundFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    backgroundFrame.BackgroundTransparency = 0.3
-    backgroundFrame.BorderSizePixel = 0
-    backgroundFrame.Parent = screenGui
+    -- ========== FULLSCREEN LOADING SCREEN ==========
+    local loadingScreen = Instance.new("Frame")
+    loadingScreen.Name = "LoadingScreen"
+    loadingScreen.Size = UDim2.new(1, 0, 1, 0)
+    loadingScreen.Position = UDim2.new(0, 0, 0, 0)
+    loadingScreen.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+    loadingScreen.BackgroundTransparency = 0
+    loadingScreen.BorderSizePixel = 0
+    loadingScreen.ZIndex = 100
+    loadingScreen.Parent = screenGui
     
-    -- Create main container frame
-    local mainFrame = Instance.new("Frame")
-    mainFrame.Name = "MainFrame"
-    mainFrame.Size = UDim2.new(0, 500, 0, 350)
-    mainFrame.Position = UDim2.new(0.5, -250, 0.5, -175)
-    mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-    mainFrame.BorderSizePixel = 0
-    mainFrame.Parent = screenGui
-    
-    -- UICorner for rounded edges
-    local uiCorner = Instance.new("UICorner")
-    uiCorner.CornerRadius = UDim.new(0, 15)
-    uiCorner.Parent = mainFrame
-    
-    -- UIStroke for border
-    local uiStroke = Instance.new("UIStroke")
-    uiStroke.Color = Color3.fromRGB(0, 0, 0)
-    uiStroke.Thickness = 2
-    uiStroke.Parent = mainFrame
-    
-    -- Image container
-    local imageContainer = Instance.new("Frame")
-    imageContainer.Name = "ImageContainer"
-    imageContainer.Size = UDim2.new(1, 0, 0, 180)
-    imageContainer.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    imageContainer.BorderSizePixel = 0
-    imageContainer.Parent = mainFrame
-    
-    local imageCorner = Instance.new("UICorner")
-    imageCorner.CornerRadius = UDim.new(0, 15)
-    imageCorner.Parent = imageContainer
-    
-    -- Image label
-    local imageLabel = Instance.new("ImageLabel")
-    imageLabel.Name = "UploadedImage"
-    imageLabel.Size = UDim2.new(1, -20, 1, -10)
-    imageLabel.Position = UDim2.new(0, 10, 0, 5)
-    imageLabel.BackgroundTransparency = 1
-    imageLabel.ImageScaleType = Enum.ScaleType.Fit
-    imageLabel.Image = "rbxassetid://0"
-    imageLabel.Parent = imageContainer
-    
-    -- Title text
-    local titleLabel = Instance.new("TextLabel")
-    titleLabel.Name = "TitleLabel"
-    titleLabel.Size = UDim2.new(1, -20, 0, 80)
-    titleLabel.Position = UDim2.new(0, 10, 0.4, -40)
-    titleLabel.BackgroundTransparency = 1
-    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-    titleLabel.TextSize = 50
-    titleLabel.Font = Enum.Font.GothamBold
-    titleLabel.Text = "crew war essentials"
-    titleLabel.TextScaled = true
-    titleLabel.Parent = mainFrame
+    -- Title on loading screen
+    local loadingTitle = Instance.new("TextLabel")
+    loadingTitle.Name = "LoadingTitle"
+    loadingTitle.Size = UDim2.new(0.8, 0, 0, 60)
+    loadingTitle.Position = UDim2.new(0.1, 0, 0.45, -30)
+    loadingTitle.BackgroundTransparency = 1
+    loadingTitle.TextColor3 = Color3.fromRGB(255, 255, 255)
+    loadingTitle.TextSize = 48
+    loadingTitle.Font = Enum.Font.GothamBold
+    loadingTitle.Text = "Crew War Essentials"
+    loadingTitle.TextScaled = true
+    loadingTitle.ZIndex = 101
+    loadingTitle.Parent = loadingScreen
     
     -- Loading bar background
     local loadingBarBg = Instance.new("Frame")
     loadingBarBg.Name = "LoadingBarBackground"
-    loadingBarBg.Size = UDim2.new(0, 350, 0, 8)
-    loadingBarBg.Position = UDim2.new(0.5, -175, 0, 220)
-    loadingBarBg.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    loadingBarBg.Size = UDim2.new(0, 400, 0, 3)
+    loadingBarBg.Position = UDim2.new(0.5, -200, 0.5, 20)
+    loadingBarBg.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
     loadingBarBg.BorderSizePixel = 0
-    loadingBarBg.Parent = mainFrame
-    
-    local barCorner = Instance.new("UICorner")
-    barCorner.CornerRadius = UDim.new(0, 4)
-    barCorner.Parent = loadingBarBg
+    loadingBarBg.ZIndex = 101
+    loadingBarBg.Parent = loadingScreen
     
     -- Loading bar fill
     local loadingBar = Instance.new("Frame")
     loadingBar.Name = "LoadingBarFill"
     loadingBar.Size = UDim2.new(0, 0, 1, 0)
-    loadingBar.BackgroundColor3 = Color3.fromRGB(0, 150, 255)
+    loadingBar.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     loadingBar.BorderSizePixel = 0
+    loadingBar.ZIndex = 102
     loadingBar.Parent = loadingBarBg
     
-    local fillCorner = Instance.new("UICorner")
-    fillCorner.CornerRadius = UDim.new(0, 4)
-    fillCorner.Parent = loadingBar
-    
-    -- Credit text
-    local creditLabel = Instance.new("TextLabel")
-    creditLabel.Name = "CreditLabel"
-    creditLabel.Size = UDim2.new(0, 250, 0, 25)
-    creditLabel.Position = UDim2.new(1, -260, 1, -35)
-    creditLabel.BackgroundTransparency = 1
-    creditLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
-    creditLabel.TextSize = 14
-    creditLabel.Font = Enum.Font.GothamBold
-    creditLabel.Text = "made by japneas"
-    creditLabel.TextXAlignment = Enum.TextXAlignment.Right
-    creditLabel.Parent = mainFrame
+    -- Credit text on loading screen
+    local loadingCredit = Instance.new("TextLabel")
+    loadingCredit.Name = "LoadingCredit"
+    loadingCredit.Size = UDim2.new(0, 300, 0, 20)
+    loadingCredit.Position = UDim2.new(1, -310, 1, -30)
+    loadingCredit.BackgroundTransparency = 1
+    loadingCredit.TextColor3 = Color3.fromRGB(180, 180, 180)
+    loadingCredit.TextSize = 14
+    loadingCredit.Font = Enum.Font.GothamBold
+    loadingCredit.Text = "coded/made by japneas"
+    loadingCredit.TextXAlignment = Enum.TextXAlignment.Right
+    loadingCredit.ZIndex = 101
+    loadingCredit.Parent = loadingScreen
     
     -- Animate loading bar
-    local duration = 3
+    local duration = 4
     local startTime = tick()
     
     while tick() - startTime < duration do
@@ -136,6 +92,107 @@ local success, err = pcall(function()
     end
     
     loadingBar.Size = UDim2.new(1, 0, 1, 0)
+    
+    -- Wait a moment before transitioning
+    wait(0.5)
+    
+    -- Fade out loading screen
+    for i = 1, 20 do
+        loadingScreen.BackgroundTransparency = i / 20
+        loadingTitle.TextTransparency = i / 20
+        loadingCredit.TextTransparency = i / 20
+        loadingBarBg.BackgroundTransparency = i / 20
+        loadingBar.BackgroundTransparency = i / 20
+        wait(0.02)
+    end
+    
+    loadingScreen:Destroy()
+    
+    -- ========== MAIN HUB SCREEN ==========
+    
+    -- Create fullscreen semi-transparent background
+    local backgroundFrame = Instance.new("Frame")
+    backgroundFrame.Name = "BackgroundFrame"
+    backgroundFrame.Size = UDim2.new(1, 0, 1, 0)
+    backgroundFrame.Position = UDim2.new(0, 0, 0, 0)
+    backgroundFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    backgroundFrame.BackgroundTransparency = 0.4
+    backgroundFrame.BorderSizePixel = 0
+    backgroundFrame.ZIndex = 100
+    backgroundFrame.Parent = screenGui
+    
+    -- Create main container frame (smaller, centered)
+    local mainFrame = Instance.new("Frame")
+    mainFrame.Name = "MainFrame"
+    mainFrame.Size = UDim2.new(0, 600, 0, 400)
+    mainFrame.Position = UDim2.new(0.5, -300, 0.5, -200)
+    mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    mainFrame.BorderSizePixel = 0
+    mainFrame.ZIndex = 101
+    mainFrame.Parent = screenGui
+    
+    -- UICorner for rounded edges
+    local uiCorner = Instance.new("UICorner")
+    uiCorner.CornerRadius = UDim.new(0, 20)
+    uiCorner.Parent = mainFrame
+    
+    -- UIStroke for border
+    local uiStroke = Instance.new("UIStroke")
+    uiStroke.Color = Color3.fromRGB(60, 60, 60)
+    uiStroke.Thickness = 2
+    uiStroke.Parent = mainFrame
+    
+    -- Image container (top section)
+    local imageContainer = Instance.new("Frame")
+    imageContainer.Name = "ImageContainer"
+    imageContainer.Size = UDim2.new(1, 0, 0, 200)
+    imageContainer.BackgroundColor3 = Color3.fromRGB(35, 35, 35)
+    imageContainer.BorderSizePixel = 0
+    imageContainer.ZIndex = 102
+    imageContainer.Parent = mainFrame
+    
+    local imageCorner = Instance.new("UICorner")
+    imageCorner.CornerRadius = UDim.new(0, 20)
+    imageCorner.Parent = imageContainer
+    
+    -- Image label
+    local imageLabel = Instance.new("ImageLabel")
+    imageLabel.Name = "UploadedImage"
+    imageLabel.Size = UDim2.new(1, -20, 1, -10)
+    imageLabel.Position = UDim2.new(0, 10, 0, 5)
+    imageLabel.BackgroundTransparency = 1
+    imageLabel.ImageScaleType = Enum.ScaleType.Fit
+    imageLabel.Image = "rbxassetid://0"
+    imageLabel.ZIndex = 103
+    imageLabel.Parent = imageContainer
+    
+    -- Title text in hub
+    local titleLabel = Instance.new("TextLabel")
+    titleLabel.Name = "TitleLabel"
+    titleLabel.Size = UDim2.new(1, -20, 0, 100)
+    titleLabel.Position = UDim2.new(0, 10, 0.45, -50)
+    titleLabel.BackgroundTransparency = 1
+    titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    titleLabel.TextSize = 44
+    titleLabel.Font = Enum.Font.GothamBold
+    titleLabel.Text = "crew war essentials"
+    titleLabel.TextScaled = true
+    titleLabel.ZIndex = 102
+    titleLabel.Parent = mainFrame
+    
+    -- Credit text in hub (bottom right)
+    local creditLabel = Instance.new("TextLabel")
+    creditLabel.Name = "CreditLabel"
+    creditLabel.Size = UDim2.new(0, 280, 0, 25)
+    creditLabel.Position = UDim2.new(1, -290, 1, -35)
+    creditLabel.BackgroundTransparency = 1
+    creditLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+    creditLabel.TextSize = 12
+    creditLabel.Font = Enum.Font.GothamBold
+    creditLabel.Text = "coded/made by japneas"
+    creditLabel.TextXAlignment = Enum.TextXAlignment.Right
+    creditLabel.ZIndex = 102
+    creditLabel.Parent = mainFrame
     
     -- Close on Delete key
     local UserInputService = game:GetService("UserInputService")
