@@ -1,29 +1,38 @@
 -- Crew War Essentials Script Hub
 -- Made by japneas
--- Compatible with Solara Roblox Injector
+-- Compatible with Xeno Executor
 
-if not game:IsLoaded() then
+-- Wait for game to load
+while not game:IsLoaded() do
     game.Loaded:Wait()
 end
 
+wait(1)
+
 local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
+-- Get local player
 local player = Players.LocalPlayer
-if not player then
-    player = Players:WaitForChild("LocalPlayer")
+while not player do
+    wait(0.1)
+    player = Players.LocalPlayer
 end
 
+-- Get PlayerGui
 local playerGui = player:WaitForChild("PlayerGui")
+
+print("[Crew War Essentials] Script loaded successfully!")
 
 -- Create ScreenGui with fullscreen settings
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "CrewWarEssentialsGui"
 screenGui.ResetOnSpawn = false
 screenGui.ZIndex = 100
-screenGui.IgnoreGuiInset = true -- Make it cover entire screen including top bar
+screenGui.IgnoreGuiInset = true
 screenGui.Parent = playerGui
+
+print("[Crew War Essentials] ScreenGui created")
 
 -- Create fullscreen background
 local backgroundFrame = Instance.new("Frame")
@@ -45,6 +54,8 @@ mainFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
 mainFrame.BorderSizePixel = 0
 mainFrame.ZIndex = 101
 mainFrame.Parent = screenGui
+
+print("[Crew War Essentials] Main frame created")
 
 -- Add rounded corners effect with UICorner
 local uiCorner = Instance.new("UICorner")
@@ -96,6 +107,8 @@ titleLabel.TextScaled = true
 titleLabel.ZIndex = 102
 titleLabel.Parent = mainFrame
 
+print("[Crew War Essentials] Title label created")
+
 -- Loading bar background
 local loadingBarBg = Instance.new("Frame")
 loadingBarBg.Name = "LoadingBarBackground"
@@ -137,6 +150,8 @@ creditLabel.TextXAlignment = Enum.TextXAlignment.Right
 creditLabel.ZIndex = 102
 creditLabel.Parent = mainFrame
 
+print("[Crew War Essentials] Loading bar created")
+
 -- Smooth loading bar animation
 local function animateLoadingBar()
     local duration = 3 -- 3 seconds to load
@@ -144,43 +159,33 @@ local function animateLoadingBar()
     
     while tick() - startTime < duration do
         local elapsed = tick() - startTime
-        local progress = elapsed / duration
+        local progress = math.min(elapsed / duration, 1)
         
-        loadingBar:TweenSize(
-            UDim2.new(progress, 0, 1, 0),
-            Enum.EasingDirection.InOut,
-            Enum.EasingStyle.Quad,
-            0.1,
-            true
-        )
+        loadingBar.Size = UDim2.new(progress, 0, 1, 0)
         
         wait(0.01)
     end
     
     -- Complete the loading bar
-    loadingBar:TweenSize(
-        UDim2.new(1, 0, 1, 0),
-        Enum.EasingDirection.InOut,
-        Enum.EasingStyle.Quad,
-        0.2,
-        true
-    )
+    loadingBar.Size = UDim2.new(1, 0, 1, 0)
+    print("[Crew War Essentials] Loading complete!")
 end
 
 -- Start loading animation
+print("[Crew War Essentials] Starting loading animation...")
 animateLoadingBar()
 
--- Optional: Add fade out after loading completes
-wait(3.5)
+-- Keep GUI visible
+wait(1)
 
--- Keep GUI visible - you can add more functionality here
--- Or add this to fade out:
--- mainFrame:TweenSize(UDim2.new(0, 500, 0, 350), Enum.EasingDirection.InOut, Enum.EasingStyle.Quad, 0.5, true)
+print("[Crew War Essentials] GUI is now fully displayed!")
+print("[Crew War Essentials] Press Delete key to close the GUI")
 
--- Add close button functionality
+-- Close button functionality - Press Delete to close
+local UserInputService = game:GetService("UserInputService")
 UserInputService.InputBegan:Connect(function(input, gameProcessed)
-    if gameProcessed then return end
     if input.KeyCode == Enum.KeyCode.Delete then
+        print("[Crew War Essentials] Closing GUI...")
         screenGui:Destroy()
     end
 end)
